@@ -3,7 +3,7 @@ import z from 'zod'
 import { extractValidationData } from '../../common/utils/extractErrorData.js'
 
 const supplierSchema = z.object({
-    name: z.string().min(2).max(50),
+    name: z.string().min(2).max(25),
     type: z.string().min(3).max(60),
     idType: z.string().min(3).max(60),
     address: z.string().min(3).max(50),
@@ -18,6 +18,9 @@ const supplierSchema = z.object({
     legalManagerName: z.string().min(3).max(25),
     legalManagerId: z.string().min(3).max(25),
     legalManagerEmail: z.string().email({ message: 'Invalid email type' }),
+    categoryGroup: z.string().min(3).max(60),
+    categoryFamily: z.string().min(3).max(60),
+    categoryLine: z.string().min(3).max(60),
     taxId: z.number().positive(),
 })
 
