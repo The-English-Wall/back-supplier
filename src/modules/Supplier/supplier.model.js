@@ -72,15 +72,15 @@ const Supplier = sequelize.define(
             allowNull: false
         },
         categoryGroup: {
-            type: DataTypes.JSON,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         categoryFamily: {
-            type: DataTypes.JSON,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         categoryLine: {
-            type: DataTypes.JSON,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         taxId: {
