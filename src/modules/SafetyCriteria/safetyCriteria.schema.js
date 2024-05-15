@@ -8,7 +8,6 @@ const safetyCriteriaSchema = z.object({
     hasSiplaftSystems: z.string().min(3).max(25),
     hasOfacReport: z.boolean(),
     qualificationResults: z.number(),
-    // supplierId: z.number().positive()
 })
 
 export const validateSafetyCriteria = (data) => {

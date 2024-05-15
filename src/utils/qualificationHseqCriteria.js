@@ -1,5 +1,5 @@
 export const qualificationHseqResults = async (data) => {
-    const { hasQualityCertified, hasEnvironmentCertified, hasSstCertified, hasSupplyChainSafetyCertified, hasSafetyCertified, accidentRatio, enterToFacilities = false } = data;
+    const { hasQualityCertified, hasEnvironmentCertified, hasSstCertified, hasSupplyChainSafetyCertified, hasSafetyCertified, accidentRatio, enterToFacilities } = data;
 
     const weightResults = 0.30;
     let hasQualityCertifiedResults = 0,

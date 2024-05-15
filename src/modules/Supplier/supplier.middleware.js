@@ -10,7 +10,7 @@ export const validateExistSupplier = catchAsync(async (req, res, next) => {
     const supplier = await supplierService.finOneSupplier(id, supplierId)
 
     if (!supplier) {
-        next(new AppError(`Supplier whit id ${id} not found`))
+        next(new AppError(`Supplier whit id ${id} not found`, 404))
     }
 
     req.supplier = supplier;

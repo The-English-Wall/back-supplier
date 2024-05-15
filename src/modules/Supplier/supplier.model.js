@@ -9,7 +9,7 @@ const Supplier = sequelize.define(
             autoIncrement: true,
             allowNull: false,
             type: DataTypes.INTEGER,
-            field: 'organization_id'
+            field: 'supplier_id'
         },
         name: {
             type: DataTypes.STRING,

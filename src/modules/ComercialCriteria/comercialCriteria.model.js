@@ -39,12 +39,8 @@ const ComercialCriteria = sequelize.define('comercial_criteria', {
     },
     qualificationResults: {
         type: DataTypes.DECIMAL,
-        allowNull: true
-    },
-    supplierId: {
-        type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'supplier_id'
+        defaultValue: 0.0
     },
     status: {
         type: DataTypes.BOOLEAN,

@@ -30,11 +30,6 @@ const SafetyCriteria = sequelize.define('safety_criteria', {
         allowNull: true,
         defaultValue: 0.0
     },
-    supplierId: {
-        type: DataTypes.INTEGER,
-        allowNull: true, //Cambiar a false, cuando se realicen las asociaciones
-        field: 'supplier_id'
-    },
     status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

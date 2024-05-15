@@ -2,6 +2,8 @@ import { AppError, catchAsync } from '../../errors/index.js'
 import { qualificationHseqResults } from '../../utils/qualificationHseqCriteria.js'
 import { validateHseqCriteria, validatePartialHseqCriteria } from './hseqCriteria.schema.js'
 import { HseqCriteriaService } from './hseqCriteria.service.js'
+import { supplierService } from '../Supplier/supplier.controller.js'
+import HseqCriteria from './hseqCriteria.model.js'
 
 const hseqCriteriaService = new HseqCriteriaService()
 
@@ -18,10 +20,13 @@ export const findOneHseqCriteria = catchAsync(async (req, res, next) => {
     const hseqCriteria = await hseqCriteriaService.findOneHseq(id)
 
     if (!hseqCriteria) {
-        next(new AppError(`Hseq Criteria whit id ${id} not found`))
+        next(new AppError(`Hseq Criteria whit id ${id} not found`, 404))
     }
 
-    return res.status(200).json(hseqCriteria)
+    return res.status(200).json({
+        ok: true,
+        hseqCriteria
+    })
 })
 
 export const createHseqCriteria = catchAsync(async (req, res, next) => {
@@ -34,15 +39,30 @@ export const createHseqCriteria = catchAsync(async (req, res, next) => {
         })
     }
 
+    const { id } = req.params;
+
+    const supplier = await supplierService.finOneSupplier(id);
+
+    if (!supplier) {
+        return next(new AppError(`Supplier whit id ${id} not found`, 404));
+    }
+
+    const existingCriteria = await HseqCriteria.findOne({ where: { supplier_id: id } });
+
+    if (existingCriteria) {
+        return next(new AppError('This supplier has already created its Comercial Criteria', 409));
+    }
+
     const qualificationResults = await qualificationHseqResults(hseqCriteriaData)
 
     hseqCriteriaData.qualificationResults = qualificationResults;
 
-    const hseqCriteria = await hseqCriteriaService.createHseq(hseqCriteriaData)
+    const hseqCriteria = await hseqCriteriaService.createHseq({ ...hseqCriteriaData, supplier_id: id })
 
     await hseqCriteriaService.updateHseq(hseqCriteria)
 
     return res.status(201).json({
+        ok: true,
         hseqCriteria,
         qualificationResults
     })
@@ -63,7 +83,7 @@ export const updateHseqCriteria = catchAsync(async (req, res, next) => {
     const hseqCriteria = await hseqCriteriaService.findOneHseq(id)
 
     if (!hseqCriteria) {
-        next(new AppError(`Hseq Criteria whit id ${id} not found`))
+        next(new AppError(`Hseq Criteria whit id ${id} not found`, 404))
     }
 
     const qualificationResults = await qualificationHseqResults(hseqCriteria)
@@ -86,7 +106,7 @@ export const deleteHseqCriteria = catchAsync(async (req, res, next) => {
     const hseqCriteria = await hseqCriteriaService.findOneHseq(id)
 
     if (!hseqCriteria) {
-        next(new AppError(`Hseq Criteria whit id ${id} not found`))
+        next(new AppError(`Hseq Criteria whit id ${id} not found`, 404))
     }
 
     await hseqCriteriaService.deleteHseq(hseqCriteria)

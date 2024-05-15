@@ -19,8 +19,8 @@ export class TaxInformationService {
         })
     }
 
-    async createTaxInfo(data) {
-        return await TaxInformation.create(data)
+    async createTaxInfo(data, supplierId) {
+        return await TaxInformation.create(data, supplierId)
     }
 
     async updateTaxInfo(taxInfo, data) {

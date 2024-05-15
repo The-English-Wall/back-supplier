@@ -10,12 +10,14 @@ import {
     deleteComercialCriteria
 } from './comercialCriteria.controller.js'
 
+import { validateExistComercial } from './comercialCriteria.middleware.js'
+
 router.route('/')
     .get(findAllComercialCriteria)
 router.route('/:id')
-    .get(findOneComercialCriteria)
+    .get(validateExistComercial, findOneComercialCriteria)
 
-router.route('/')
+router.route('/:id')
     .post(createComercialCriteria)
 router.route('/:id')
     .patch(updateComercialCriteria)

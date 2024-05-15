@@ -10,12 +10,14 @@ import {
     deleteSafetyCriteria
 } from './safetyCriteria.controller.js'
 
+import { validateExistSafety } from './safetyCriteria.middleware.js'
+
 router.route('/')
     .get(findAllSafetyCriteria)
 router.route('/:id')
-    .get(findOneSafetyCriteria)
+    .get(validateExistSafety, findOneSafetyCriteria)
 
-router.route('/')
+router.route('/:id')
     .post(createSafetyCriteria)
 router.route('/:id')
     .patch(updateSafetyCriteria)
