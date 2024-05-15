@@ -2,7 +2,7 @@ import { AppError, catchAsync } from '../../errors/index.js'
 import { validateSupplier, validatePartialSupplier } from './supplier.schema.js'
 import { SupplierService } from './supplier.service.js'
 
-const supplierService = new SupplierService()
+export const supplierService = new SupplierService()
 
 export const findAllSupplier = catchAsync(async (req, res, next) => {
 
@@ -18,10 +18,10 @@ export const findOneSupplier = catchAsync(async (req, res, next) => {
     const supplier = await supplierService.finOneSupplier(id)
 
     if (!supplier) {
-        next(new AppError(`Supplier whit id ${id} not found`))
+        next(new AppError(`Supplier whit id ${id} not found`, 404))
     }
 
-    return res.json(supplier)
+    return res.status(200).json(supplier)
 })
 
 export const createSupplier = catchAsync(async (req, res, next) => {
@@ -54,27 +54,28 @@ export const updateSupplier = catchAsync(async (req, res, next) => {
     const supplier = await supplierService.finOneSupplier(id)
 
     if (!supplier) {
-        next(new AppError(`Supplier whit id ${id} not found`))
+        next(new AppError(`Supplier whit id ${id} not found`, 404))
     }
 
     const updateSupplier = await supplierService.updateSupplier(supplier, supplierData)
 
-    return res.status(200).json(updateSupplier)
+    return res.status(200).json({
+        updateSupplier
+    })
 })
 
 export const deleteSupplier = catchAsync(async (req, res, next) => {
-    const { id } = req.params
+    const { id } = req.params;
 
     const supplier = await supplierService.finOneSupplier(id)
 
     if (!supplier) {
-        next(new AppError(`Supplier whit id ${id} not found`))
+        next(new AppError(`Supplier whit id ${id} not found`, 404))
     }
 
     await supplierService.deleteOrganization(supplier)
 
-    return res.satus(200).json({
-        status: 'Succes',
+    return res.status(200).json({
         message: 'Supplier deleted successfully'
     })
 })

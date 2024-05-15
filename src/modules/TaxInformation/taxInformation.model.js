@@ -14,7 +14,7 @@ const TaxInformation = sequelize.define('tax_information', {
         allowNull: false
     },
     nonProfitDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false
     },
     majorTaxPayer: {
@@ -22,7 +22,7 @@ const TaxInformation = sequelize.define('tax_information', {
         allowNull: false
     },
     majorTaxdate: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false
     },
     regimeType: {
@@ -57,11 +57,6 @@ const TaxInformation = sequelize.define('tax_information', {
     taxInformationIsAvailable: {
         type: DataTypes.BOOLEAN,
         allowNull: false
-    },
-    supplierId: {
-        type: DataTypes.INTEGER,
-        allowNull: true, //True para probar endpoint cambiar a false con las asociaciones 
-        field: 'supplier_id'
     },
     status: {
         type: DataTypes.BOOLEAN,

@@ -19,8 +19,8 @@ export class HseqCriteriaService {
         })
     }
 
-    async createHseq(data) {
-        return await HseqCriteria.create(data)
+    async createHseq(data, supplierId) {
+        return await HseqCriteria.create(data, supplierId)
     }
 
     async updateHseq(hseq, data) {

@@ -10,11 +10,11 @@ export class SupplierService {
         })
     }
 
-    async finOneSupplier(id, supplierId) {
+    async finOneSupplier(id) {
         return await Supplier.findOne({
             where: {
                 status: true,
-                id: supplierId || id
+                id: id
             }
         })
     }

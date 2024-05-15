@@ -12,7 +12,6 @@ const hseqCriteriaSchema = z.object({
     workType: z.string().min(3).max(25),
     accidentRatio: z.number(),
     qualificationResults: z.number(),
-    // supplierId: z.number().positive()
 })
 
 export const validateHseqCriteria = (data) => {

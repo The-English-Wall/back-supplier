@@ -19,8 +19,8 @@ export class SafetyCriteriaService {
         })
     }
 
-    async createSafetyCriteria(data) {
-        return await SafetyCriteria.create(data)
+    async createSafetyCriteria(data, supplierId) {
+        return await SafetyCriteria.create(data, supplierId)
     }
 
     async updateSafetyCriteria(safetyCriteria, data) {

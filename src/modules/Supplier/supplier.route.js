@@ -22,5 +22,5 @@ router.route('/')
 
 router.route('/:id')
     .patch(updateSupplier)
-router.route(':/id')
+router.route('/:id')
     .delete(deleteSupplier)

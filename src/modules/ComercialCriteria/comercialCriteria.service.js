@@ -19,8 +19,8 @@ export class ComercialCriteriaService {
         })
     }
 
-    async createCriteria(data) {
-        return await ComercialCriteria.create(data)
+    async createCriteria(data, supplierId) {
+        return await ComercialCriteria.create(data, supplierId)
     }
 
     async updateCriteria(comercial, data) {

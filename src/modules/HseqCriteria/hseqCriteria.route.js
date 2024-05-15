@@ -10,12 +10,14 @@ import {
     deleteHseqCriteria
 } from './hseqCriteria.controller.js'
 
+import { validateExistHseqCriteria } from './hseqCriteria.middleware.js'
+
 router.route('/')
     .get(findAllHseqCriteria)
 router.route('/:id')
-    .get(findOneHseqCriteria)
+    .get(validateExistHseqCriteria, findOneHseqCriteria)
 
-router.route('/')
+router.route('/:id')
     .post(createHseqCriteria)
 router.route('/:id')
     .patch(updateHseqCriteria)

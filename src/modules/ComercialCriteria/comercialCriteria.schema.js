@@ -11,7 +11,6 @@ const comercialCriteriaSchema = z.object({
     hasWarranty: z.boolean(),
     deliveryAverageDays: z.number().positive(),
     qualificationResults: z.number(),
-    // supplerId: z.number().positive()
 })
 
 export const validateComercialCriteria = (data) => {

@@ -21,7 +21,6 @@ const taxInformationSchema = z.object({
     netWorth: z.number(),
     qualificationResults: z.number(),
     taxInformationIsAvailable: z.boolean(),
-    // organizationId: z.number(), 
 })
 
 export const validateTaxInformation = (data) => {

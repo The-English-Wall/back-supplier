@@ -7,7 +7,7 @@ import { router as hseqCriteria } from '../modules/HseqCriteria/hseqCriteria.rou
 
 export const router = express.Router()
 
-router.use('/criteria-comercial', criteriaComercialRoute)
+router.use('/criteriacomercial', criteriaComercialRoute)
 router.use('/taxinformation', taxInformationRoute)
 router.use('/safetycriteria', safetyCriteria)
 router.use('/hseqcriteria', hseqCriteria)

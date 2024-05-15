@@ -47,11 +47,6 @@ const HseqCriteria = sequelize.define('hseq_criteria', {
         allowNull: false,
         defaultValue: 0.0
     },
-    supplierId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        field: 'supplier_id' // Cambiar a false cuando tenga las asociaciones
-    },
     status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

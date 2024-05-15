@@ -10,12 +10,14 @@ import {
     deleteTaxInfomation
 } from './taxInformation.controller.js'
 
+import { validateExistTaxInformation } from './taxInformation.middleware.js'
+
 router.route('/')
     .get(findAllTaxInformation)
 router.route('/:id')
-    .get(findOneTaxInformation)
+    .get(validateExistTaxInformation, findOneTaxInformation)
 
-router.route('/')
+router.route('/:id')
     .post(createTaxiInformation)
 router.route('/:id')
     .patch(updateTaxInformation)
