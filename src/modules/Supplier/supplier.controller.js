@@ -1,6 +1,9 @@
+import axios from 'axios'
 import { AppError, catchAsync } from '../../errors/index.js'
 import { validateSupplier, validatePartialSupplier } from './supplier.schema.js'
 import { SupplierService } from './supplier.service.js'
+
+const BASE_URL = 'http://localhost:3000/api/v1'
 
 export const supplierService = new SupplierService()
 
@@ -28,13 +31,26 @@ export const createSupplier = catchAsync(async (req, res, next) => {
     const { hasError, errorMessages, supplierData } = validateSupplier(req.body)
 
     if (hasError) {
-        return res.satus(422).json({
+        return res.status(422).json({
             status: 'error',
             message: errorMessages
         })
     }
 
     const supplier = await supplierService.createSupplier(supplierData)
+
+    const supplierPayload = {
+        id: supplier.id,
+        name: supplier.name
+    }
+
+    try {
+        await axios.patch(`${BASE_URL}/company/${supplierData.companyId}/supplier-list`, {
+            supplierList: [supplierPayload]
+        })
+    } catch (error) {
+        return next(new AppError('Failed to update company with new supplier' + error.message))
+    }
 
     res.status(201).json(supplier)
 })
