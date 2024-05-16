@@ -4,8 +4,6 @@ import { validateSupplier, validatePartialSupplier } from './supplier.schema.js'
 import { SupplierService } from './supplier.service.js'
 import { BASE_URL_COMPANY } from '../../config/conections/axios.config.js'
 
-const BASE_URL = 'http://localhost:3000/api/v1'
-
 export const supplierService = new SupplierService()
 
 export const findAllSupplier = catchAsync(async (req, res, next) => {

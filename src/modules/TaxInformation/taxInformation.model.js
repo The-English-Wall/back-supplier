@@ -6,8 +6,7 @@ const TaxInformation = sequelize.define('tax_information', {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
-        type: DataTypes.INTEGER,
-        field: 'tax_id'
+        type: DataTypes.INTEGER
     },
     nonProfitResolution: {
         type: DataTypes.BOOLEAN,
