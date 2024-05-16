@@ -1,7 +1,7 @@
 {
-  "name": "academlomeals_db",
+  "name": "suppliers_db",
   "version": "1.0.0",
-  "description": "",
+  "description": "Suppliers microservice",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alan Rojas",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.8",
