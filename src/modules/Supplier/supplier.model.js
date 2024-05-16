@@ -85,8 +85,11 @@ const Supplier = sequelize.define(
         },
         taxId: {
             type: DataTypes.INTEGER,
-            allowNull: true, //este estado es solo para prueba de endpoint, cambiar a false
-            field: 'tax_id'
+            allowNull: true
+        },
+        companyId: {
+            type: DataTypes.JSON,
+            allowNull: true
         },
         status: {
             type: DataTypes.BOOLEAN,

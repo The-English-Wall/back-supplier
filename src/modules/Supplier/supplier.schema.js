@@ -21,6 +21,7 @@ const supplierSchema = z.object({
     categoryGroup: z.string().min(3).max(60),
     categoryFamily: z.string().min(3).max(60),
     categoryLine: z.string().min(3).max(60),
+    companyId: z.number().positive()
 })
 
 export const validateSupplier = (data) => {
