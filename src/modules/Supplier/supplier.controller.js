@@ -2,6 +2,7 @@ import axios from 'axios'
 import { AppError, catchAsync } from '../../errors/index.js'
 import { validateSupplier, validatePartialSupplier } from './supplier.schema.js'
 import { SupplierService } from './supplier.service.js'
+import { BASE_URL_COMPANY } from '../../config/conections/axios.config.js'
 
 const BASE_URL = 'http://localhost:3000/api/v1'
 
@@ -45,7 +46,7 @@ export const createSupplier = catchAsync(async (req, res, next) => {
     }
 
     try {
-        await axios.patch(`${BASE_URL}/company/${supplierData.companyId}/supplier-list`, {
+        await BASE_URL_COMPANY.patch(`/company/${supplierData.companyId}/supplier-list`, {
             supplierList: [supplierPayload]
         })
     } catch (error) {
