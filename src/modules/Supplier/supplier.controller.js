@@ -29,6 +29,8 @@ export const findOneSupplier = catchAsync(async (req, res, next) => {
 export const createSupplier = catchAsync(async (req, res, next) => {
     const { hasError, errorMessages, supplierData } = validateSupplier(req.body)
 
+    console.log(req.body)
+
     if (hasError) {
         return res.status(422).json({
             status: 'error',
@@ -87,6 +89,11 @@ export const deleteSupplier = catchAsync(async (req, res, next) => {
     if (!supplier) {
         next(new AppError(`Supplier whit id ${id} not found`, 404))
     }
+
+    //Acceder al endpoint de company
+    //tengo acceder al company.supplierList => filter (supplierid !== id)
+    //crer el supplierList udpate
+    //Acceder al update de company y pasarle el supplierList update 
 
     await supplierService.deleteOrganization(supplier)
 
