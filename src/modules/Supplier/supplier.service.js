@@ -27,7 +27,13 @@ export class SupplierService {
         return await supplier.update(data)
     }
 
-    async deleteOrganization(supplier) {
+    async findSupplierByTaxId(taxId) {
+        return await Supplier.findOne({
+            where: { taxId }
+        })
+    }
+
+    async deleteSupplier(supplier) {
         return await supplier.update({
             status: false
         })

@@ -29,8 +29,6 @@ export const findOneSupplier = catchAsync(async (req, res, next) => {
 export const createSupplier = catchAsync(async (req, res, next) => {
     const { hasError, errorMessages, supplierData } = validateSupplier(req.body)
 
-    console.log(req.body)
-
     if (hasError) {
         return res.status(422).json({
             status: 'error',
@@ -38,16 +36,33 @@ export const createSupplier = catchAsync(async (req, res, next) => {
         })
     }
 
+    const existingSupplier = await supplierService.findSupplierByTaxId(supplierData.taxId)
+
+    if (existingSupplier) {
+        next(new AppError('A supplier with this taxId already exists', 400))
+    }
+
     const supplier = await supplierService.createSupplier(supplierData)
+
+    let company
+    try {
+        const { data } = await BASE_URL_COMPANY.get(`/company/${supplierData.companyId}`)
+        company = data
+    } catch (error) {
+        return next(new AppError('Failed to fetch company data: ' + error.message, 500))
+    }
 
     const supplierPayload = {
         id: supplier.id,
         name: supplier.name
     }
 
+    company.supplierList === null ? [] : company.supplierList
+    company.supplierList.push(supplierPayload)
+
     try {
         await BASE_URL_COMPANY.patch(`/company/${supplierData.companyId}/supplier-list`, {
-            supplierList: [supplierPayload]
+            supplierList: company.supplierList
         })
     } catch (error) {
         return next(new AppError('Failed to update company with new supplier' + error.message))
@@ -81,21 +96,41 @@ export const updateSupplier = catchAsync(async (req, res, next) => {
     })
 })
 
+
 export const deleteSupplier = catchAsync(async (req, res, next) => {
-    const { id } = req.params;
+    const { id } = req.params
 
     const supplier = await supplierService.finOneSupplier(id)
 
     if (!supplier) {
-        next(new AppError(`Supplier whit id ${id} not found`, 404))
+        return next(new AppError(`Supplier with id ${id} not found`, 404))
     }
 
-    //Acceder al endpoint de company
-    //tengo acceder al company.supplierList => filter (supplierid !== id)
-    //crer el supplierList udpate
-    //Acceder al update de company y pasarle el supplierList update 
+    const companyId = supplier.companyId
 
-    await supplierService.deleteOrganization(supplier)
+    let company
+    try {
+        const { data } = await BASE_URL_COMPANY.get(`/company/${companyId}`)
+        company = data
+    } catch (error) {
+        return next(new AppError('Failed to fetch company data: ' + error.message, 500))
+    }
+
+    if (!company || !Array.isArray(company.supplierList)) {
+        return next(new AppError(`Company with id ${companyId} has an invalid supplier list`, 500))
+    }
+
+    const updatedSupplierList = company.supplierList.filter(supplier => supplier.id !== parseInt(id))
+
+    try {
+        await BASE_URL_COMPANY.patch(`/company/${companyId}/supplier-list`, {
+            supplierList: updatedSupplierList
+        })
+    } catch (error) {
+        return next(new AppError('Failed to update company with new supplier list: ' + error.message, 500))
+    }
+
+    await supplierService.deleteSupplier(supplier)
 
     return res.status(200).json({
         message: 'Supplier deleted successfully'
