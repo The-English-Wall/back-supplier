@@ -28,7 +28,7 @@ const Supplier = sequelize.define(
             allowNull: false
         },
         codeArea: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
         phone: {

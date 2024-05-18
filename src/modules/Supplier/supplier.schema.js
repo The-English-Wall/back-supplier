@@ -7,7 +7,7 @@ const supplierSchema = z.object({
     type: z.string().min(3).max(60),
     idType: z.string().min(3).max(60),
     address: z.string().min(3).max(50),
-    codeArea: z.number().positive(),
+    codeArea: z.string().min(2).max(8),
     phone: z.string().min(3).max(25),
     email: z.string().email({ message: 'Invalid email type' }),
     country: z.string().min(3).max(20),
