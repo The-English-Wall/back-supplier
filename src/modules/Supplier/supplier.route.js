@@ -10,7 +10,7 @@ import {
     deleteSupplier
 } from './supplier.controller.js'
 
-import { validateExistSupplier } from './supplier.middleware.js'
+import { validateExistSupplier, protect } from './supplier.middleware.js'
 
 router.route('/')
     .get(findAllSupplier)
@@ -19,8 +19,11 @@ router.route('/:id')
 
 router.route('/')
     .post(createSupplier)
+// .post(protect, createSupplier)
 
 router.route('/:id')
     .patch(updateSupplier)
+// .patch(protect, updateSupplier)
 router.route('/:id')
     .delete(deleteSupplier)
+// .delete(protect, deleteSupplier)

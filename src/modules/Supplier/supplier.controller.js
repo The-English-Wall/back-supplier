@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { AppError, catchAsync } from '../../errors/index.js'
 import { validateSupplier, validatePartialSupplier } from './supplier.schema.js'
 import { SupplierService } from './supplier.service.js'
