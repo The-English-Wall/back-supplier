@@ -12,7 +12,10 @@ export const envs = {
     DB_HOST: env.get("DB_HOST").required().asString(),
     DB_PORT: env.get("DB_PORT").required().asString(),
     DB_PASSWORD: env.get("DB_PASSWORD").required().asString(),
-    DB_NAME_SUPPLIER: env.get("DB_NAME_SUPPLIER").required().asString()
+    DB_NAME_SUPPLIER: env.get("DB_NAME_SUPPLIER").required().asString(),
     // JWT_EXPIRE_IN: env.get("JWT_EXPIRE_IN").required().asString(),
+    HOST_MAIL_PROCURE: env.get("HOST_MAIL_PROCURE").required().asString(),
+    USERMAIL_PROCURE: env.get("USERMAIL_PROCURE").required().asString(),
+    PASS_APP: env.get("PASS_APP").required().asString()
 }
 

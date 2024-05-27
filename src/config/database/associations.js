@@ -3,6 +3,8 @@ import TaxInformation from "../../modules/TaxInformation/taxInformation.model.js
 import ComercialCriteria from "../../modules/ComercialCriteria/comercialCriteria.model.js"
 import SafetyCriteria from "../../modules/SafetyCriteria/safetyCriteria.model.js"
 import HseqCriteria from "../../modules/HseqCriteria/hseqCriteria.model.js"
+import Offers from "../../modules/Offers/offers.model.js"
+import Quoatations from "../../modules/Quoatations/quoatations.model.js"
 
 export const initModel = () => {
     Supplier.hasOne(ComercialCriteria, { foreignKey: 'supplier_id' })
@@ -16,4 +18,7 @@ export const initModel = () => {
 
     Supplier.hasOne(HseqCriteria, { foreignKey: 'supplier_id' })
     HseqCriteria.belongsTo(Supplier, { foreignKey: 'supplier_id' })
+
+    Offers.hasMany(Quoatations, { foreignKey: 'offer_id' })
+    Quoatations.belongsTo(Offers, { foreignKey: 'offer_id' })
 }

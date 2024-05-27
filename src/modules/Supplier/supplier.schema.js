@@ -3,7 +3,7 @@ import z from 'zod'
 import { extractValidationData } from '../../common/utils/extractErrorData.js'
 
 const supplierSchema = z.object({
-    name: z.string().min(2).max(25),
+    contactName: z.string().min(2).max(25),
     type: z.string().min(3).max(60),
     idType: z.string().min(3).max(60),
     address: z.string().min(3).max(50),

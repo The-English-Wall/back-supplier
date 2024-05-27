@@ -1,4 +1,5 @@
 import { AppError, catchAsync } from "../../errors/index.js";
+import { ERROR_SAFETY_MESSAGES } from "../../utils/errorsMessagesHandle.js";
 import { SafetyCriteriaService } from './safetyCriteria.service.js'
 
 const safetyService = new SafetyCriteriaService()
@@ -10,7 +11,7 @@ export const validateExistSafety = catchAsync(async (req, res, next) => {
     const safety = await safetyService.findOneSafety(id, safetyId)
 
     if (!safety) {
-        next(new AppError(`Safety criteria whit id ${id} not found`, 404))
+        next(new AppError(ERROR_SAFETY_MESSAGES.error_safety_not_found, 404))
     }
 
     req.safety = safety;
