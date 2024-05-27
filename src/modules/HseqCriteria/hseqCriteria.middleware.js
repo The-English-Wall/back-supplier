@@ -10,7 +10,7 @@ export const validateExistHseqCriteria = catchAsync(async (req, res, next) => {
     const hseqCriteria = hseqService.findOneHseq(id, hseqId)
 
     if (!hseqCriteria) {
-        next(new AppError(`Hseq Criteria whit id ${id} not found`, 404))
+        next(new AppError(ERROR_HSEQ_MESSAGES.error_comercial_not_found, 404))
     }
 
     req.hseqCriteria = hseqCriteria;

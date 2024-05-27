@@ -11,7 +11,7 @@ const Supplier = sequelize.define(
             type: DataTypes.INTEGER,
             field: 'supplier_id'
         },
-        name: {
+        contactName: {
             type: DataTypes.STRING,
             allowNull: false
         },

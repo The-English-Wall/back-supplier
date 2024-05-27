@@ -4,6 +4,8 @@ import { validateSafetyCriteria, validatePartialSafetyCriteria } from './safetyC
 import { SafetyCriteriaService } from './safetyCriteria.service.js'
 import { supplierService } from '../Supplier/supplier.controller.js'
 import SafetyCriteria from './safetyCriteria.model.js'
+import { ERROR_SAFETY_MESSAGES } from '../../utils/errorsMessagesHandle.js'
+import { SUCCESS_MESSAGES } from '../../utils/succesMessages.js'
 
 const safetyCriteriaService = new SafetyCriteriaService()
 
@@ -20,7 +22,7 @@ export const findOneSafetyCriteria = catchAsync(async (req, res, next) => {
     const safetyCriteria = await safetyCriteriaService.findOneSafety(id)
 
     if (!safetyCriteria) {
-        next(new AppError(`Safety Criteria whit id ${id} not found`), 404)
+        next(new AppError(ERROR_SAFETY_MESSAGES.error_safety_not_found), 404)
     }
 
     return res.status(200).json({
@@ -44,13 +46,13 @@ export const createSafetyCriteria = catchAsync(async (req, res, next) => {
     const supplier = supplierService.finOneSupplier(id)
 
     if (!supplier) {
-        return next(new AppError(`Supplier whit id ${id} not found`, 404));
+        return next(new AppError(ERROR_SAFETY_MESSAGES.error_safety_not_found, 404));
     }
 
     const existingCriteria = await SafetyCriteria.findOne({ where: { supplier_id: id } });
 
     if (existingCriteria) {
-        return next(new AppError('This supplier has already created its Comercial Criteria', 409));
+        return next(new AppError(ERROR_SAFETY_MESSAGES.error_safety_supplier_exist, 409));
     }
 
     const qualificationResults = await qualificationSafetyResults(safetyCriteriaData)
@@ -83,7 +85,7 @@ export const updateSafetyCriteria = catchAsync(async (req, res, next) => {
     const safetyCriteria = await safetyCriteriaService.findOneSafety(id)
 
     if (!safetyCriteria) {
-        next(new AppError(`Safety Criteria whit id ${id} not found`, 404))
+        next(new AppError(ERROR_SAFETY_MESSAGES.error_safety_not_found, 404))
     }
 
     const qualificationResults = await qualificationSafetyResults(safetyCriteria)
@@ -92,9 +94,7 @@ export const updateSafetyCriteria = catchAsync(async (req, res, next) => {
 
     await safetyCriteriaService.updateSafetyCriteria(safetyCriteria, safetyCriteriaData)
 
-    return res.status(200).json({
-        ok: true,
-        message: 'Safety Criteria updated successfully',
+    return res.status(200).json(SUCCESS_MESSAGES.success_safety_updated, {
         safetyCriteria,
         qualificationResults
     })
@@ -106,13 +106,10 @@ export const deleteSafetyCriteria = catchAsync(async (req, res, next) => {
     const safetyCriteria = await safetyCriteriaService.findOneSafety(id)
 
     if (!safetyCriteria) {
-        next(new AppError(`Safety Criteria whit id ${id} not found`, 404))
+        next(new AppError(ERROR_SAFETY_MESSAGES.error_safety_not_found, 404))
     }
 
     await safetyCriteriaService.deleteSafetyCriteria(safetyCriteria)
 
-    return res.status(200).json({
-        ok: true,
-        message: 'Safety Criteria delete successfully'
-    })
+    return res.status(200).json(SUCCESS_MESSAGES.success_safety_deleted)
 })

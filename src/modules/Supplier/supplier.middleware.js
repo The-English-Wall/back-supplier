@@ -3,6 +3,7 @@ import { SupplierService } from './supplier.service.js'
 import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 import { envs } from '../../config/enviroments/enviroments.js';
+import { ERROR_SUPPLIER_MESSAGES } from '../../utils/errorsMessagesHandle.js';
 
 const supplierService = new SupplierService()
 
@@ -13,7 +14,7 @@ export const validateExistSupplier = catchAsync(async (req, res, next) => {
     const supplier = await supplierService.finOneSupplier(id, supplierId)
 
     if (!supplier) {
-        next(new AppError(`Supplier whit id ${id} not found`, 404))
+        next(new AppError(ERROR_SUPPLIER_MESSAGES.error_supplier_not_found, 404))
     }
 
     req.supplier = supplier;
@@ -30,7 +31,7 @@ export const protect = catchAsync(async (req, res, next) => {
     }
 
     if (!token) {
-        next(new AppError('You are not logged in! Please log in to get access', 401));
+        next(new AppError(ERROR_SUPPLIER_MESSAGES.error_user_not_login, 401));
     }
 
     const decoded = await promisify(jwt.verify)(
@@ -42,6 +43,6 @@ export const protect = catchAsync(async (req, res, next) => {
         req.token = token
         next()
     } else {
-        next(new AppError('Unauthorization', 401))
+        next(new AppError(ERROR_SUPPLIER_MESSAGES.error_supplier_unauthorized, 401))
     }
 });
