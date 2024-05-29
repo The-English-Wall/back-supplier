@@ -11,10 +11,10 @@ app.use(cors());
 
 app.use("/api/v1", router)
 
+app.use(globalErrorHandler)
+
 app.all("*", (req, res, next) => {
     next(new AppError(`cant find ${req.originalUrl} on this server!`, 404))
 })
-
-app.use(globalErrorHandler)
 
 export default app;

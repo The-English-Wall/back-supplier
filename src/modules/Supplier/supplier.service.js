@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import Supplier from "./supplier.model.js";
 
 export class SupplierService {
@@ -27,10 +28,10 @@ export class SupplierService {
         return await supplier.update(data)
     }
 
-    async findSupplierByTaxId(taxId) {
+    async findSupplierByTaxId(taxId, companyId) {
         return await Supplier.findOne({
-            where: { taxId }
-        })
+            where: { taxId, companyId }
+        });
     }
 
     async deleteSupplier(supplier) {

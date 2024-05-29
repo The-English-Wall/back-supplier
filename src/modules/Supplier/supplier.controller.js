@@ -37,10 +37,10 @@ export const createSupplier = catchAsync(async (req, res, next) => {
         })
     }
 
-    const existingSupplier = await supplierService.findSupplierByTaxId(supplierData.taxId)
+    const existingSupplier = await supplierService.findSupplierByTaxId(supplierData.taxId, supplierData.companyId)
 
     if (existingSupplier) {
-        next(new AppError(ERROR_SUPPLIER_MESSAGES.error_supplier_taxid, 400))
+        return next(new AppError(ERROR_SUPPLIER_MESSAGES.error_supplier_taxid, 400))
     }
 
     const supplier = await supplierService.createSupplier(supplierData)
