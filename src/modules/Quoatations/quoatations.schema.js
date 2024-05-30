@@ -13,13 +13,13 @@ const quotationsSchema = z.object({
     currency: z.string(),
     discount: z.number().optional(),
     comments: z.string().optional(),
-    statusOpen: z.array(z.enum(['created', 'closed'])).nonempty(),
+    statusOpen: z.array(z.enum(['created', 'closed'])).nonempty().optional(),
     productList: z.array(object({
         productName: z.string(),
         reference: z.string(),
         brand: z.string(),
-        quantity: z.string(),
-        suggestedPrice: z.string(),
+        quantity: z.number(),
+        suggestedPrice: z.number(),
         offeredPrice: z.number(),
         iva: z.number().positive(),
         subTotal: z.number()

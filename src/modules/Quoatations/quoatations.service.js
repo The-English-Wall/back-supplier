@@ -10,6 +10,15 @@ export class QuoatationsService {
         })
     }
 
+    async findAllQuoatationsByOffer(id) {
+        console.log(id)
+        return await Quoatations.findAll({
+            where: {
+                offer_id: id
+            }
+        })
+    }
+
     async findOneQuoatations(id) {
         return await Quoatations.findOne({
             where: {

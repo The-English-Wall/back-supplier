@@ -15,13 +15,12 @@ export const findAllSupplier = catchAsync(async (req, res, next) => {
 })
 
 export const findOneSupplier = catchAsync(async (req, res, next) => {
-
     const { id } = req.params
 
     const supplier = await supplierService.finOneSupplier(id)
 
     if (!supplier) {
-        next(new AppError(ERROR_SUPPLIER_MESSAGES.error_supplier_not_found, 404))
+        return next(new AppError(ERROR_SUPPLIER_MESSAGES.error_supplier_not_found, 404))
     }
 
     return res.status(200).json(supplier)
@@ -87,7 +86,7 @@ export const updateSupplier = catchAsync(async (req, res, next) => {
     const supplier = await supplierService.finOneSupplier(id)
 
     if (!supplier) {
-        next(new AppError(ERROR_SUPPLIER_MESSAGES.error_supplier_not_found, 404))
+        return next(new AppError(ERROR_SUPPLIER_MESSAGES.error_supplier_not_found, 404))
     }
 
     const updateSupplier = await supplierService.updateSupplier(supplier, supplierData)

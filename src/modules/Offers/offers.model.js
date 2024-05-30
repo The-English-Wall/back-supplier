@@ -41,7 +41,7 @@ const Offers = sequelize.define(
         },
         productList: {
             type: DataTypes.JSON,
-            allowNull: true
+            allowNull: false
         },
         companyId: {
             type: DataTypes.INTEGER,

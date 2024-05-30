@@ -5,8 +5,9 @@ import { ERROR_OFFERS_MESSAGES } from '../../utils/errorsMessagesHandle.js'
 import { SUCCESS_MESSAGES } from '../../utils/succesMessages.js'
 import { message } from '../../utils/emailMessages/emailMessages.js'
 import { sendMail } from '../../utils/nodemailes.js'
+import moment from 'moment'
 
-const offersServive = new OffersService()
+export const offersServive = new OffersService()
 
 export const findAllOffers = catchAsync(async (req, res, next) => {
     const offers = await offersServive.findAllOffers()
@@ -34,6 +35,24 @@ export const createOffer = catchAsync(async (req, res, next) => {
             status: 'error',
             message: errorMessages
         })
+    }
+
+    if (offersData.supplierList.length === 0) {
+        return next(new AppError(ERROR_OFFERS_MESSAGES.error_offers_supplier_list_empty, 406))
+    }
+
+    if (offersData.productList.length === 0) {
+        return next(new AppError(ERROR_OFFERS_MESSAGES.error_offers_list_products_empty, 406))
+    }
+
+    const limitOffersDate = moment(offersData.limitOfferDate, "DD/MM/YYYY").format("DD/MM/YYYY")
+    const deliveryDate = moment(offersData.deliveryDate, "DD/MM/YYYY").format("DD/MM/YYYY")
+    const isToday = moment().format("DD/MM/YYYY")
+
+    const resultDate = limitOffersDate > isToday
+
+    if (resultDate) {
+        return next(new AppError('La fecha limite para ofertar ha expirado'))
     }
 
     const offer = await offersServive.createOffer(offersData)
