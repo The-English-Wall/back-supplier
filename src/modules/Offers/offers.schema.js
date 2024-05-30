@@ -22,9 +22,9 @@ const offersSchema = z.object({
         brand: z.string().min(3).max(32),
         quantity: z.number().positive(),
         suggestedPrice: z.number().positive()
-    })).optional(),
+    })),
     companyId: z.number().positive(),
-    statusOpen: z.array(z.enum(['open', 'pending', 'complete'])).nonempty()
+    statusOpen: z.array(z.enum(['open', 'pending', 'complete'])).nonempty().optional()
 })
 
 export const validateOffers = (data) => {

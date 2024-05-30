@@ -21,7 +21,7 @@ const supplierSchema = z.object({
     categoryGroup: z.string().min(3).max(60),
     categoryFamily: z.string().min(3).max(60),
     categoryLine: z.string().min(3).max(60),
-    taxId: z.string(),
+    taxId: z.string().min(3).max(56),
     companyId: z.number().positive()
 })
 

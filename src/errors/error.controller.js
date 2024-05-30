@@ -6,7 +6,7 @@ const handleCastError22001 = () =>
   new AppError("value too long for type on attribute in database", 400);
 
 const handleCastError23505 = () =>
-  new AppError("Duplicate field value: please use another value", 400);
+  new AppError("Llave duplicada: Por favor introduce otro valor", 400);
 
 const handleCastError22P02 = () =>
   new AppError("Invalid data type in database", 400);

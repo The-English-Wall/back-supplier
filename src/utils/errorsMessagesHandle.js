@@ -29,7 +29,9 @@ export const ERROR_TAX_MESSAGES = {
 }
 
 export const ERROR_OFFERS_MESSAGES = {
-    error_offer_not_found: 'El ID de la oferta no se ha encontrado'
+    error_offer_not_found: 'El ID de la oferta no se ha encontrado',
+    error_offers_supplier_list_empty: 'La lista de proveedores no puede estar vacia',
+    error_offers_list_products_empty: 'La lista de productos no puede estar vacia'
 }
 
 export const ERROR_QUOATATIONS_MESSAGES = {

@@ -85,11 +85,10 @@ const Supplier = sequelize.define(
         },
         taxId: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: false
         },
         companyId: {
-            type: DataTypes.JSON,
+            type: DataTypes.INTEGER,
             allowNull: true
         },
         status: {

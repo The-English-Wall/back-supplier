@@ -4,6 +4,7 @@ export const router = express.Router();
 
 import {
     findAllQuoatations,
+    findAllQuoatationsByOfferId,
     findOneQuoatations,
     createQuoatations,
     updateQuoatations,
@@ -12,9 +13,13 @@ import {
 
 router.route('/')
     .get(findAllQuoatations)
-    .post(createQuoatations)
+
+router.route('/quotation-by-offer')
+    .get(findAllQuoatationsByOfferId)
+
 
 router.route('/:id')
     .get(findOneQuoatations)
+    .post(createQuoatations)
     .patch(updateQuoatations)
     .delete(deleteQuoatations)

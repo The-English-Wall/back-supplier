@@ -22,7 +22,7 @@ export const findOneComercialCriteria = catchAsync(async (req, res, next) => {
     const comercialCriteria = await comercialCriteriaService.findOneCriteria(id)
 
     if (!comercialCriteria) {
-        next(new AppError(ERROR_COMERCIAL_MESSAGES.error_comercial_not_found, 404))
+        return next(new AppError(ERROR_COMERCIAL_MESSAGES.error_comercial_not_found, 404))
     }
 
     return res.status(200).json(comercialCriteria)
@@ -104,7 +104,7 @@ export const deleteComercialCriteria = catchAsync(async (req, res, next) => {
     const comercialCriteria = await comercialCriteriaService.findOneCriteria(id)
 
     if (!comercialCriteria) {
-        next(new AppError(ERROR_COMERCIAL_MESSAGES.error_comercial_not_found), 404)
+        return next(new AppError(ERROR_COMERCIAL_MESSAGES.error_comercial_not_found), 404)
     }
 
     await comercialCriteriaService.deteleCriteria(comercialCriteria)
