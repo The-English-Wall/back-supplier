@@ -1,7 +1,7 @@
 import { catchAsync, AppError } from '../../errors/index.js'
 import { QuoatationsService } from './quoatations.service.js'
 import { validateQuoatations, validatePartialQuoatations } from './quoatations.schema.js'
-import { ERROR_QUOATATIONS_MESSAGES } from '../../utils/errorsMessagesHandle.js'
+import { ERROR_OFFERS_MESSAGES, ERROR_QUOATATIONS_MESSAGES, ERROR_SUPPLIER_MESSAGES } from '../../utils/errorsMessagesHandle.js'
 import { SUCCESS_MESSAGES } from '../../utils/succesMessages.js'
 import { supplierService } from '../Supplier/supplier.controller.js'
 import { offersServive } from '../Offers/offers.controller.js'
@@ -75,13 +75,13 @@ export const createQuoatations = catchAsync(async (req, res, next) => {
     const offerExist = await offersServive.findOneOffer(id)
 
     if (!offerExist) {
-        return next(new AppError('El ID de la oferta no se ha encontrado'))
+        return next(new AppError(ERROR_OFFERS_MESSAGES.error_offer_not_found))
     }
 
     const supplierFoundAndActive = await supplierService.finOneSupplier(quoatationsData.supplierId)
 
     if (!supplierFoundAndActive) {
-        return next(new AppError('Proveedor no encontrado o no activo'))
+        return next(new AppError(ERROR_SUPPLIER_MESSAGES.error_supplier_not_active))
     }
 
     const quoatations = await quoatationsService.createQuoatations({ ...quoatationsData, offer_id: id })

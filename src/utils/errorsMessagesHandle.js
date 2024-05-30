@@ -6,6 +6,7 @@ export const ERROR_SUPPLIER_MESSAGES = {
     error_supplier_invalid_supplierList: 'Error, la Companía tiene una lista de Proveedores invalida',
     error_user_not_login: 'Error, el usuario debe iniciar sesión',
     error_supplier_unauthorized: 'Error, el usuario no está autorizado para continuar',
+    error_supplier_not_active: 'Error, proveedor no encontrado o no activo'
 }
 
 export const ERROR_COMERCIAL_MESSAGES = {
