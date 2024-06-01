@@ -7,13 +7,16 @@ import {
     findOneSupplier,
     createSupplier,
     updateSupplier,
-    deleteSupplier
+    deleteSupplier,
+    bulkCreate
 } from './supplier.controller.js'
 
 import { validateExistSupplier, protect } from './supplier.middleware.js'
 
 router.route('/')
     .get(findAllSupplier)
+router.route('/bulkcreate')
+    .get(bulkCreate)
 router.route('/:id')
     .get(validateExistSupplier, findOneSupplier)
 

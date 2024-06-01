@@ -24,6 +24,10 @@ export class SupplierService {
         return await Supplier.create(data)
     }
 
+    async bulkCreate(data) {
+        return await Supplier.bulkCreate(data)
+    }
+
     async updateSupplier(supplier, data) {
         return await supplier.update(data)
     }

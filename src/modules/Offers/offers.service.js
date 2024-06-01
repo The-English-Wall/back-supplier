@@ -9,12 +9,38 @@ export class OffersService {
             }
         })
     }
+    async findAllOffersByTaxId(taxId) {
+        return await Offers.findAll({
+            where: {
+                isDeleted: false,
+                organizationTaxId: taxId
+            }
+        })
+    }
+    
+    async findAllOffersByCompanyId(companyId) {
+        return await Offers.findAll({
+            where: {
+                isDeleted: false,
+                companyId: companyId
+            }
+        })
+    }
 
     async findOneOffer(id) {
         return await Offers.findOne({
             where: {
                 isDeleted: false,
                 id: id
+            }
+        })
+    }
+
+    async findOneOfferByUserId(userId) {
+        return await Offers.findAll({
+            where: {
+                isDeleted: false,
+                userId: userId
             }
         })
     }
