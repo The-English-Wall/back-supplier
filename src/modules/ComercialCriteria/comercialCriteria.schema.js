@@ -10,7 +10,7 @@ const comercialCriteriaSchema = z.object({
     hasReturnPolicy: z.boolean(),
     hasWarranty: z.boolean(),
     deliveryAverageDays: z.number().positive(),
-    qualificationResults: z.number(),
+    qualificationResults: z.number().optional(),
 })
 
 export const validateComercialCriteria = (data) => {
