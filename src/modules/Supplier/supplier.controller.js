@@ -4,6 +4,7 @@ import { SupplierService } from './supplier.service.js'
 import { BASE_URL_COMPANY } from '../../config/conections/axios.config.js'
 import { ERROR_SUPPLIER_MESSAGES } from '../../utils/errorsMessagesHandle.js'
 import { SUCCESS_MESSAGES } from '../../utils/succesMessages.js'
+import data from '../../../wp_users.json' assert {type: 'json'}
 
 export const supplierService = new SupplierService()
 
@@ -131,4 +132,11 @@ export const deleteSupplier = catchAsync(async (req, res, next) => {
     await supplierService.deleteSupplier(supplier)
 
     return res.status(200).json(SUCCESS_MESSAGES.success_supplier_deleted)
+})
+
+export const bulkCreate = catchAsync(async (req, res, next) => {
+    
+
+    await supplierService.bulkCreate(data)
+    return res.status(200).json({message: 'Proveedores Creados'})
 })

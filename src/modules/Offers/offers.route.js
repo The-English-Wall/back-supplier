@@ -7,7 +7,10 @@ import {
     findOneOffer,
     createOffer,
     updateOffer,
-    deleteOffer
+    deleteOffer,
+    findAllOffersByUser,
+    findAllOffersByTaxId,
+    findAllInvitationOffers
 } from './offers.controller.js'
 
 router.route('/')
@@ -18,3 +21,12 @@ router.route('/:id')
     .get(findOneOffer)
     .patch(updateOffer)
     .delete(deleteOffer)
+
+router.route('/by-user/:id')
+    .get(findAllOffersByUser)
+
+router.route('/by-taxid/:id')
+    .get(findAllOffersByTaxId)
+
+router.route('/invitations/:id')
+    .get(findAllInvitationOffers)

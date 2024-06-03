@@ -24,6 +24,8 @@ const offersSchema = z.object({
         suggestedPrice: z.number().positive()
     })),
     companyId: z.number().positive(),
+    organizationTaxId: z.string(),
+    userId: z.number().positive(),
     statusOpen: z.array(z.enum(['open', 'pending', 'complete'])).nonempty().optional()
 })
 

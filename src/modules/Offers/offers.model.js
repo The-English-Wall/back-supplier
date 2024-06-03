@@ -47,10 +47,19 @@ const Offers = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        organizationTaxId: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null
+        },
         statusOpen: {
             type: DataTypes.ENUM('open', 'pending', 'complete'),
             allowNull: false,
             defaultValue: 'open'
+        },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
         isDeleted: {
             type: DataTypes.BOOLEAN,

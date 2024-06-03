@@ -17,23 +17,28 @@ const Supplier = sequelize.define(
         },
         type: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "Cedula"
         },
         idType: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "234234"
         },
         address: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "av siempre viva"
         },
         codeArea: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "57"
         },
         phone: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "3001000000"
         },
         email: {
             type: DataTypes.STRING,
@@ -41,23 +46,27 @@ const Supplier = sequelize.define(
         },
         country: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "Colombia"
         },
         department: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "Antioquia"
         },
         city: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "Medellin"
         },
         supplierName: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         legalType: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "Cedula"
         },
         legalManagerName: {
             type: DataTypes.STRING,
@@ -65,23 +74,28 @@ const Supplier = sequelize.define(
         },
         legalManagerId: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "1"
         },
         legalManagerEmail: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: "jhondoe@doe.com"
         },
         categoryGroup: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: "Materias Primas"
         },
         categoryFamily: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: "Productos Quimicos"
         },
         categoryLine: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: "Acidos corrosivos"
         },
         taxId: {
             type: DataTypes.STRING,
@@ -89,7 +103,8 @@ const Supplier = sequelize.define(
         },
         companyId: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: true,
+            defaultValue: 1
         },
         status: {
             type: DataTypes.BOOLEAN,
