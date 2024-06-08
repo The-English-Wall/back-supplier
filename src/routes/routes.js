@@ -16,6 +16,3 @@ router.use('/hseqcriteria', hseqCriteria)
 router.use('/supplier', supplierRoute)
 router.use('/offer', offersRoute)
 router.use('/quotations', quotationsRoute)
-
-
-

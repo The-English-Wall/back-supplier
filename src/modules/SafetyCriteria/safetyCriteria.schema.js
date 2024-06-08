@@ -7,7 +7,7 @@ const safetyCriteriaSchema = z.object({
     hasSagrilaftSystems: z.string().min(3).max(25),
     hasSiplaftSystems: z.string().min(3).max(25),
     hasOfacReport: z.boolean(),
-    qualificationResults: z.number(),
+    qualificationResults: z.number().optional(),
 })
 
 export const validateSafetyCriteria = (data) => {

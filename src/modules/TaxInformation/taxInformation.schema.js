@@ -19,7 +19,7 @@ const taxInformationSchema = z.object({
     inventories: z.number(),
     financialObligations: z.number(),
     netWorth: z.number(),
-    qualificationResults: z.number(),
+    qualificationResults: z.number().optional(),
     taxInformationIsAvailable: z.boolean(),
 })
 
