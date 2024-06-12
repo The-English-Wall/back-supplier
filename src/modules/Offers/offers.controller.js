@@ -11,9 +11,14 @@ import { envs } from '../../config/enviroments/enviroments.js'
 
 export const offersServive = new OffersService()
 
-// POR HACER:  este controller solo utilizara para los usuario de tipo "EMPLOYEE"
+// este controller solo utilizara para los usuario de tipo "EMPLOYEE"
+// el frontend debe enviar el user_id en los header, definir en los interceptos en el front
 export const findAllOffers = catchAsync(async (req, res, next) => {
     const offers = await offersServive.findAllOffers()
+    const {data} = await BASE_URL_USER.get(`users/${req.headers.user_id}`)
+    if(data.userType !== "employee") {
+        return next(new AppError('No tienes autorizacion de consultar todas las ofertas', 404)) 
+    }
     return res.status(200).json(offers)
 })
 
@@ -71,17 +76,46 @@ export const findAllOffersByUser = catchAsync(async (req, res, next) => {
 })
 
 
-//POR HACER: si el usuario es tipo CUSTOMER, solo puede encontrar una oferta donde el user.companyId === PRINCIPAL_ORGNAIZATION && user.organizationTaxId === offer.organizationId
+// importante: El front deben enviar el user_id por headers
+// si el usuario es tipo CUSTOMER, solo puede encontrar una oferta donde el user.companyId === PRINCIPAL_ORGNAIZATION && user.organizationTaxId === offer.organizationId
 // si el usuario es tipo EMPLOYE, solo puede encontrar una oferta donde el user.companyId !== PRINCIPAL_ORGNAIZATION && user.companyId === offer.oganizationId
 // Si el usuario es tipo SUPPLIER, solo puede encontrar una oferta donde 
 // el user.companyId !== PRINCIPAL_ORGNAIZATION && offers.map(o => o.supplierlist.filter(s => s.taxId === user.organizationTaxId))
 export const findOneOffer = catchAsync(async (req, res, next) => {
     const { id } = req.params;
 
+    const {data} = await BASE_URL_USER.get(`users/${req.headers.user_id}`)
     const offer = await offersServive.findOneOffer(id)
 
     if (!offer) {
         next(new AppError(ERROR_OFFERS_MESSAGES.error_offer_not_found, 404))
+    }
+
+    if(data.userType === "customer" && data.companyId === Number(envs.PRINCIPAL_ORGANIZATION)) {
+        const offerFound = offer?.supplierList?.find(o => o.taxId === data.organizationTaxId)
+        if(!offerFound) {
+            return next(new AppError(ERROR_OFFERS_MESSAGES.error_offer_not_found, 404)) 
+        }
+        offer.supplierList = []
+        return res.status(200).json(offer)
+    }
+
+    if(data.userType === "supplier" && data.companyId === Number(envs.PRINCIPAL_ORGANIZATION)) {
+        const offerFound = offer?.supplierList?.find(o => o.taxId === data.organizationTaxId)
+        if(!offerFound) {
+            return next(new AppError(ERROR_OFFERS_MESSAGES.error_offer_not_found, 404)) 
+        }
+        offer.supplierList = []
+        return res.status(200).json(offer)
+    }
+
+    if(data.userType === "employee" && data.companyId !== Number(envs.PRINCIPAL_ORGANIZATION)) {
+        const offerFound = offer.companyId === data.companyId
+        if(!offerFound) {
+            return next(new AppError(ERROR_OFFERS_MESSAGES.error_offer_not_found, 404)) 
+        }
+        offer.supplierList = []
+        return res.status(200).json(offer)
     }
 
     return res.status(200).json(offer)
@@ -110,11 +144,11 @@ export const createOffer = catchAsync(async (req, res, next) => {
             return next(new AppError('Eres usuario tipo proveedor, no puedes crear ofertas', 404))    
         }
         
-        if(data.userType === "employee" && offersData.companyId === envs.PRINCIPAL_ORGANIZATION) {
+        if(data.userType === "employee" && offersData.companyId === Number(envs.PRINCIPAL_ORGANIZATION)) {
             return next(new AppError("No tienes acceso a crear oferta en una organizacion que no te corresponde", 406))
         }
 
-        if(data.userType === "customer" && offersData.companyId !== envs.PRINCIPAL_ORGANIZATION) {
+        if(data.userType === "customer" && offersData.companyId !== Number(envs.PRINCIPAL_ORGANIZATION)) {
             return next(new AppError("No tienes acceso a crear oferta en una organizacion que no te corresponde", 406))
         }
 
@@ -151,7 +185,8 @@ export const createOffer = catchAsync(async (req, res, next) => {
 
 })
 
-// POR HACER: solo pueden actualizar los usuario tipo EMPLOYEE en cualuqier oferta que no sea de la COMPANY PRINCIPAL
+// importante: El front deben enviar el user_id por headers
+// solo pueden actualizar los usuario tipo EMPLOYEE en cualuqier oferta que no sea de la COMPANY PRINCIPAL
 // y los usuarios tipo CUSTOMER, solo pueden actualizar las ofertas creadas por ellos mismos, asi que se debe validar que el userId que esta
 // en la oferta, sea el mismo que esta logueado
 export const updateOffer = catchAsync(async (req, res, next) => {
@@ -166,10 +201,21 @@ export const updateOffer = catchAsync(async (req, res, next) => {
 
     const { id } = req.params;
 
+    const {data} = await BASE_URL_USER.get(`users/${req.headers.user_id}`)
     const offer = await offersServive.findOneOffer(id)
 
     if (!offer) {
         next(new AppError(ERROR_OFFERS_MESSAGES.error_offer_not_found, 404))
+    }
+    
+    if(data.userType === "employee" && data.companyId === Number(envs.PRINCIPAL_ORGANIZATION)) {
+        return next(new AppError("No puedes editar una oferta ajena a tu organización", 404)) 
+    }
+    if(data.userType === "customer" && data.companyId !== Number(envs.PRINCIPAL_ORGANIZATION) && offer.userId !== data.id) {
+        return next(new AppError("No puedes editar una oferta que no creaste", 404)) 
+    }
+    if(data.userType === "supplier" && data.companyId !== Number(envs.PRINCIPAL_ORGANIZATION)) {
+        return next(new AppError("No puedes editar ofertas", 404)) 
     }
 
     const updatedOffer = await offersServive.updateOffer(offer, offersData)
