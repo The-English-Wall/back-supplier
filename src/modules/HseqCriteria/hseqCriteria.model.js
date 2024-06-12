@@ -10,23 +10,23 @@ const HseqCriteria = sequelize.define('hseq_criteria', {
         field: 'hseqCriteria_id'
     },
     hasQualityCertified: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         allowNull: true
     },
     hasEnvironmentCertified: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         allowNull: true
     },
     hasSafetyCertified: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         allowNull: true
     },
     hasSstCertified: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         allowNull: true
     },
     hasSupplyChainSafetyCertified: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         allowNull: true
     },
     enterToFacilities: {

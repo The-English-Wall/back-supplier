@@ -9,19 +9,19 @@ export const qualificationHseqResults = async (data) => {
         hasSafetyCertifiedResults = 0,
         accidentRatioResults = 0
 
-    if (hasQualityCertified) {
+    if (hasQualityCertified.status) {
         hasQualityCertifiedResults = enterToFacilities ? 10 : 15
     }
-    if (hasEnvironmentCertified) {
+    if (hasEnvironmentCertified.status) {
         hasEnvironmentCertifiedResults = enterToFacilities ? 10 : 15
     }
-    if (hasSstCertified) {
+    if (hasSstCertified.status) {
         hasSstCertifiedResults = enterToFacilities ? 30 : 15
     }
-    if (hasSupplyChainSafetyCertified) {
+    if (hasSupplyChainSafetyCertified.status) {
         hasSupplyChainSafetyCertifiedResults = enterToFacilities ? 10 : 15
     }
-    if (hasSafetyCertified) {
+    if (hasSafetyCertified.status) {
         hasSafetyCertifiedResults = enterToFacilities ? 10 : 15
     }
 

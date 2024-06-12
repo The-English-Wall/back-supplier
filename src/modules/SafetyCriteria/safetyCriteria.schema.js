@@ -3,9 +3,18 @@ import z from 'zod'
 import { extractValidationData } from '../../common/utils/extractErrorData.js'
 
 const safetyCriteriaSchema = z.object({
-    hasSarlaftSystems: z.string().min(3).max(25),
-    hasSagrilaftSystems: z.string().min(3).max(25),
-    hasSiplaftSystems: z.string().min(3).max(25),
+    hasSarlaftSystems: z.object({
+        notApplicable: z.boolean(),
+        hasSystem: z.boolean() 
+    }),
+    hasSagrilaftSystems: z.object({
+        notApplicable: z.boolean(),
+        hasSystem: z.boolean() 
+    }),
+    hasSiplaftSystems: z.object({
+        notApplicable: z.boolean(),
+        hasSystem: z.boolean() 
+    }),
     hasOfacReport: z.boolean(),
     qualificationResults: z.number().optional(),
 })

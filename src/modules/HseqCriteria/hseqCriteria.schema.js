@@ -3,16 +3,32 @@ import z from 'zod'
 import { extractValidationData } from '../../common/utils/extractErrorData.js'
 
 const hseqCriteriaSchema = z.object({
-    hasQualityCertified: z.string().min(3).max(25).optional(),
-    hasEnvironmentCertified: z.string().min(3).max(25).optional(),
-    hasSafetyCertified: z.string().min(3).max(25).optional(),
-    hasSstCertified: z.string().min(3).max(25).optional(),
-    hasSupplyChainSafetyCertified: z.string().min(3).max(25).optional(),
+    hasQualityCertified: z.object({
+        status: z.boolean(),
+        certify: z.string().nullable()
+    }),
+    hasEnvironmentCertified: z.object({
+        status: z.boolean(),
+        certify: z.string().nullable()
+    }),
+    hasSafetyCertified: z.object({
+        status: z.boolean(),
+        certify: z.string().nullable()
+    }),
+    hasSstCertified: z.object({
+        status: z.boolean(),
+        certify: z.string().nullable()
+    }),
+    hasSupplyChainSafetyCertified: z.object({
+        status: z.boolean(),
+        certify: z.string().nullable()
+    }),
     enterToFacilities: z.boolean(),
     workType: z.string().min(3).max(25),
     accidentRatio: z.number(),
     qualificationResults: z.number().optional(),
 })
+
 
 export const validateHseqCriteria = (data) => {
     const result = hseqCriteriaSchema.safeParse(data)

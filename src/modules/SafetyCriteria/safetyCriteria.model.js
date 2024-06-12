@@ -10,15 +10,15 @@ const SafetyCriteria = sequelize.define('safety_criteria', {
         field: 'safetyCriteria_id'
     },
     hasSarlaftSystems: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         allowNull: true
     },
     hasSagrilaftSystems: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         allowNull: true
     },
     hasSiplaftSystems: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         allowNull: true
     },
     hasOfacReport: {
