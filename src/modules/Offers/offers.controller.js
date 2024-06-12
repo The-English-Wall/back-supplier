@@ -223,8 +223,8 @@ export const updateOffer = catchAsync(async (req, res, next) => {
     return res.status(200).json(SUCCESS_MESSAGES.success_offer_updated, updatedOffer)
 })
 
-
-// POR HACER: solo pueden borrar los usuario tipo EMPLOYEE en cualuqier oferta que no sea de la COMPANY PRINCIPAL
+// importante: El front deben enviar el user_id por headers
+// solo pueden borrar los usuario tipo EMPLOYEE en cualuqier oferta que no sea de la COMPANY PRINCIPAL
 // y los usuarios tipo CUSTOMER, solo pueden borrar las ofertas creadas por ellos mismos, asi que se debe validar que el userId que esta
 // en la oferta, sea el mismo que esta logueado
 export const deleteOffer = catchAsync(async (req, res, next) => {
@@ -234,6 +234,28 @@ export const deleteOffer = catchAsync(async (req, res, next) => {
 
     if (!offer) {
         next(new AppError(ERROR_OFFERS_MESSAGES.error_offer_not_found, 404))
+    }
+
+    try {
+        const {data} = await BASE_URL_USER.get(`users/${req.headers.user_id}`)
+    
+        if(data.userType === "supplier") {
+            return next(new AppError("Eres un usuario tipo proveedor, no puedes borrar ofertas", 404)) 
+        }
+    
+        if(data.userType === 'employee' && data.companyId === Number(envs.PRINCIPAL_ORGANIZATION)){
+            return next(new AppError("No puedes eliminar ofertasen esta organización", 404)) 
+        }
+    
+        if(data.userType === "customer" && data.id !== offer.userId) {
+            return next(new AppError("No puedes eliminar una oferta que no creaste", 404)) 
+        }
+    
+        if(data.userType === "customer" && data.companyId !== Number(envs.PRINCIPAL_ORGANIZATION)) {
+            return next(new AppError("No puedes eliminar ofertas por fuera de la organización principal", 404)) 
+        }
+    } catch (error) {
+        return next(new AppError("Hubo un error, por favor contactarse con el administrador del sistema", 404)) 
     }
 
     await offersServive.deleteOffer(offer)
